@@ -21,9 +21,7 @@
  *    getIntervalArray(3, 3) => [ 3 ]
  */
 function getIntervalArray(start, end) {
-  let result = new Array(end - start + 1);
-  result = result.fill(start).map((item, index) => item + index);
-  return result;
+  return Array.from({ length: end - start + 1 }, (val, index) => start + index);
 }
 
 /**
@@ -203,6 +201,9 @@ function getHead(arr, n) {
  *    getTail([ 'a', 'b', 'c', 'd'], 0) => []
  */
 function getTail(arr, n) {
+  if (n === 0) {
+    return [];
+  }
   const result = arr.slice(-n);
   return result;
 }
@@ -304,8 +305,7 @@ function flattenArray(/* nestedArray */) {
  *   selectMany(['one','two','three'], (x) => x.split('')) =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 function selectMany(arr, childrenSelector) {
-  const result = arr.map(childrenSelector).flat();
-  return result;
+  return arr.flatMap(childrenSelector);
 }
 
 /**
@@ -508,13 +508,9 @@ function findLongestIncreasingSubsequence(/* nums */) {
  *  propagateItemsByPositionIndex([ 1,2,3,4,5 ]) => [ 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  const result = [];
-  for (let i = 0; i < arr.length; i += 1) {
-    for (let j = 0; j < i + 1; j += 1) {
-      result.push(arr[i]);
-    }
-  }
-  return result;
+  return arr
+    .map((item, index) => new Array(index + 1).fill(item))
+    .flat(Infinity);
 }
 
 /**
